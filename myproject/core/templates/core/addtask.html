@@ -1,0 +1,47 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'core/addtask.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Title *</label>
+        <input type="text" name="title" placeholder="e.g. Design homepage" required>
+
+        <label>Description</label>
+        <textarea name="description" placeholder="What needs to be done?"></textarea>
+
+        <div class="row">
+            <div class="col">
+                <label>Priority</label>
+                <select name="priority">
+                    <option value="Low">Low</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <label>Status</label>
+                <select name="status">
+                    <option value="Pending" selected>Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button type="submit" class="save">Save Task</button>
+            <button type="button" class="cancel" onclick="window.history.back()">Cancel</button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% block content %}
+
+<!-- Toggle Button (Mobile) -->
+<div onclick="toggleSidebar()" 
+     style="padding:10px 15px;
+            background:#4F46E5;
+            color:white;
+            font-size:18px;
+            cursor:pointer;
+            display:none;"
+     id="toggleBtn">
+☰ Menu
+</div>
+
+<div id="sidebar"
+     style="
+    width:230px;
+    background:#ffffff;
+    border-right:1px solid #e5e7eb;
+    padding:20px 0;
+    min-height:calc(100vh - 48px);
+    font-family:Arial, sans-serif;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:0.3s ease;
+">
+
+    <!-- Top Menu -->
+    <div>
+        <div style="padding:0 20px 15px;font-weight:600;color:#111827;font-size:13px;letter-spacing:.5px;">
+            MENU
+        </div>
+
+        <a href="{% url 'dashboard' %}"
+           style="display:flex;align-items:center;gap:12px;padding:12px 20px;
+           font-size:14px;text-decoration:none;
+           color:{% if request.resolver_match.url_name == 'dashboard' %}#4F46E5{% else %}#374151{% endif %};
+           background:{% if request.resolver_match.url_name == 'dashboard' %}#EEF2FF{% else %}transparent{% endif %};
+           border-left:3px solid {% if request.resolver_match.url_name == 'dashboard' %}#4F46E5{% else %}transparent{% endif %};">
+        🏠 Dashboard
+        </a>
+
+        <a href="{% url 'addtask' %}"
+           style="display:flex;align-items:center;gap:12px;padding:12px 20px;
+           font-size:14px;text-decoration:none;
+           color:{% if request.resolver_match.url_name == 'addtask' %}#4F46E5{% else %}#374151{% endif %};
+           background:{% if request.resolver_match.url_name == 'addtask' %}#EEF2FF{% else %}transparent{% endif %};
+           border-left:3px solid {% if request.resolver_match.url_name == 'addtask' %}#4F46E5{% else %}transparent{% endif %};">
+        ➕ Add Task
+        </a>
+
+        <a href="{% url 'allTask' %}"
+           style="display:flex;align-items:center;gap:12px;padding:12px 20px;
+           font-size:14px;text-decoration:none;
+           color:{% if request.resolver_match.url_name == 'allTask' %}#4F46E5{% else %}#374151{% endif %};
+           background:{% if request.resolver_match.url_name == 'allTask' %}#EEF2FF{% else %}transparent{% endif %};
+           border-left:3px solid {% if request.resolver_match.url_name == 'allTask' %}#4F46E5{% else %}transparent{% endif %};">
+        🗂 Task Details
+        </a>
+    </div>
+
+    <div style="padding:20px;">
+        <a href="{% url 'logout' %}" 
+           style="display:block;text-align:center;background:#dc2626;color:white;
+                  padding:10px;text-decoration:none;border-radius:6px;font-size:14px;font-weight:500;">
+        Logout
+        </a>
+    </div>
+
+</div>
+
+<style>
+/* Mobile */
+@media (max-width:768px){
+
+    #toggleBtn{
+        display:block;
+    }
+
+    #sidebar{
+        position:fixed;
+        left:-240px;
+        top:48px;
+        height:100%;
+        z-index:999;
+    }
+
+    #sidebar.active{
+        left:0;
+    }
+}
+</style>
+
+<script>
+function toggleSidebar(){
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+{% endblock %}

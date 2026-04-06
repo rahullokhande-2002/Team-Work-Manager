@@ -1,0 +1,127 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'core/dashboard.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-container">
+
+    <!-- Chart -->
+    <div class="chart-card">
+        <h3>Task Analytics</h3>
+        <canvas id="taskChart"></canvas>
+    </div>
+
+    <!-- Stats Numbers -->
+    <div class="stats-details">
+
+        <div class="detail-box">
+            <h4>Total Tasks</h4>
+            <p>{{ total }}</p>
+        </div>
+
+        <div class="detail-box">
+            <h4>Completed</h4>
+            <p>{{ completed }}</p>
+        </div>
+
+        <div class="detail-box">
+            <h4>Pending</h4>
+            <p>{{ pending }}</p>
+        </div>
+
+        <div class="detail-box">
+            <h4>In Progress</h4>
+            <p>{{ inprogress }}</p>
+        </div>
+
+    </div>
+
+    <!-- Quick Action -->
+    <div class="quick-action">
+        <a href="{% url 'addtask' %}" class="btn-add">
+            + Add Task
+        </a>
+    </div>
+
+    <!-- Recent Tasks -->
+    <div class="recent">
+        <h3>Recent Tasks</h3>
+
+        <table class="task-table">
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+            </tr>
+
+            {% for task in recent %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+
+<script>
+const ctx = document.getElementById('taskChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Completed', 'Pending', 'In Progress', 'Total'],
+        datasets: [{
+            label: 'Tasks Overview',
+            data: [{{ completed }}, {{ pending }}, {{ inprogress }}, {{ total }}],
+            backgroundColor: [
+                '#10B981',
+                '#F59E0B',
+                '#3B82F6',
+                '#6366F1'
+            ],
+            borderRadius: 8,
+            barThickness: 40
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                backgroundColor: '#111827',
+                titleColor: '#fff',
+                bodyColor: '#fff',
+                padding: 10,
+                cornerRadius: 6
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: '#f1f5f9'
+                },
+                ticks: {
+                    stepSize: 1
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

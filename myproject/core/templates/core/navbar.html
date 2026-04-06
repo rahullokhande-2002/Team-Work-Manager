@@ -1,0 +1,104 @@
+{% load static %}
+
+<style>
+/* Navbar */
+.navbar{
+    background:#4F46E5;
+    height:56px;
+    padding:0 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Logo */
+.logo{
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    letter-spacing:0.3px;
+}
+
+/* Nav links */
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.nav-links a{
+    color:rgba(255,255,255,0.85);
+    font-size:14px;
+    padding:6px 14px;
+    border-radius:6px;
+    text-decoration:none;
+    transition:0.2s ease;
+}
+
+/* Hover */
+.nav-links a:hover{
+    background:rgba(255,255,255,0.15);
+    color:white;
+}
+
+/* Active link */
+.nav-links a.active{
+    background:white;
+    color:#4F46E5;
+    font-weight:500;
+}
+
+/* Mobile toggle */
+.menu-toggle{
+    display:none;
+    font-size:22px;
+    color:white;
+    cursor:pointer;
+}
+
+/* Mobile responsive */
+@media (max-width:768px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    .nav-links{
+        position:absolute;
+        top:56px;
+        left:0;
+        right:0;
+        background:#4F46E5;
+        flex-direction:column;
+        padding:12px;
+        display:none;
+        gap:8px;
+    }
+
+    .nav-links a{
+        padding:10px;
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+}
+</style>
+
+<nav class="navbar">
+
+    <div class="logo">TaskManager</div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    
+
+</nav>
+
+<script>
+function toggleMenu(){
+    document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
