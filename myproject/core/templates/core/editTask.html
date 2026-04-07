@@ -3,6 +3,116 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'core/editTask.css' %}">
+<style>
+/* Container */
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+input[type="text"], input[type="date"], textarea, select {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #6366F1;
+    box-shadow: 0 0 5px rgba(99,102,241,0.3);
+}
+
+/* Textarea */
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Row for priority/status */
+.row {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.row .col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+button.save {
+    background: #10B981;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+button.save:hover {
+    background: #059669;
+    transform: scale(1.05);
+}
+
+button.cancel {
+    background: #EF4444;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+button.cancel:hover {
+    background: #DC2626;
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+    .row {
+        flex-direction: column;
+    }
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -11,19 +121,17 @@
     <form method="POST">
         {% csrf_token %}
 
+        <label>Assigned To *</label>
+        <input type="text" name="assigned_to" value="{{ data.assigned_to }}" placeholder="e.g. Rahul" required>
+
         <label>Update Title *</label>
-        <input type="text" name="title"
-               value="{{ data.title }}"
-               placeholder="e.g. Design homepage" required>
+        <input type="text" name="title" value="{{ data.title }}" placeholder="e.g. Design homepage" required>
 
         <label>Update Description</label>
-        <textarea name="description"
-                  placeholder="What needs to be done?">{{ data.description }}</textarea>
+        <textarea name="description" placeholder="What needs to be done?">{{ data.description }}</textarea>
 
-        <!-- ✅ ADD THIS -->
         <label>Update Due Date</label>
-        <input type="date" name="due_date"
-               value="{{ data.due_date|date:'Y-m-d' }}">
+        <input type="date" name="due_date" value="{{ data.due_date|date:'Y-m-d' }}">
 
         <div class="row">
             <div class="col">

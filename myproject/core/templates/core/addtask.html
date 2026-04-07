@@ -11,15 +11,19 @@
     <form method="POST">
         {% csrf_token %}
 
+        <!-- NAME FIELD -->
+        <label>Assigned To *</label>
+        <input type="text" name="assigned_to" placeholder="e.g. Rahul / Team Member" required>
+
+        <!-- TITLE -->
         <label>Title *</label>
         <input type="text" name="title" placeholder="e.g. Design homepage" required>
 
+        <!-- DESCRIPTION -->
         <label>Description</label>
         <textarea name="description" placeholder="What needs to be done?"></textarea>
 
- 
-
-        <!-- NEW DATE FIELD -->
+        <!-- DUE DATE -->
         <label>Due Date</label>
         <input type="date" name="due_date">
 

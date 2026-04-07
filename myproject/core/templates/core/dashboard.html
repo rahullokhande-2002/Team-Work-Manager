@@ -4,41 +4,193 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'core/dashboard.css' %}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+/* Container */
+.dashboard-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Charts Row */
+.chart-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.chart-card {
+    flex: 1 1 45%;
+    max-width: 45%;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.chart-card h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* Make charts smaller and responsive */
+.chart-card canvas {
+    width: 100% !important;
+    height: 150px !important;
+}
+
+/* Stats Cards */
+.stats-details {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.detail-box {
+    flex: 1 1 20%;
+    min-width: 150px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.detail-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.detail-box h4 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.detail-box p {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.stat-icon {
+    font-size: 24px;
+}
+
+/* Quick Action Button */
+.btn-add {
+    background-color: #4F46E5;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-add:hover {
+    background-color: #4338CA;
+    transform: translateY(-2px);
+}
+
+/* Recent Tasks Table */
+.recent {
+    margin-top: 20px;
+}
+
+.recent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.recent-header .table-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.recent-header .btn-add {
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.task-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.task-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.task-table td {
+    padding: 12px 15px;
+    font-size: 14px;
+}
+
+.task-table tr:hover {
+    background-color: #f3f4f6;
+}
+
+/* Status Colors */
+.status.completed { color: #10B981; font-weight: 600; }
+.status.pending { color: #F59E0B; font-weight: 600; }
+.status.in\ progress { color: #3B82F6; font-weight: 600; }
+
+/* Responsive Adjustments */
+@media screen and (max-width: 900px) {
+    .chart-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .detail-box {
+        flex: 1 1 45%;
+        min-width: 120px;
+    }
+}
+</style>
 {% endblock %}
 
 {% block content %}
-
 <div class="dashboard-container">
 
-    <!-- Top Section -->
-    <div class="top-grid">
-
+    <!-- Charts Row -->
+    <div class="chart-row">
         <div class="chart-card">
             <h3>Task Analytics</h3>
-            <div class="chart-wrapper">
-                <canvas id="taskChart"></canvas>
-            </div>
+            <canvas id="taskChart"></canvas>
         </div>
 
         <div class="chart-card">
             <h3>Task Distribution</h3>
-            <div class="chart-wrapper small">
-                <canvas id="taskPieChart"></canvas>
-            </div>
+            <canvas id="taskPieChart"></canvas>
         </div>
-
     </div>
 
-
-    <!-- Stats -->
+    <!-- Stats Cards -->
     <div class="stats-details">
-
         <div class="detail-box total">
             <div>
                 <h4>Total Tasks</h4>
                 <p>{{ total }}</p>
             </div>
-            <span>📊</span>
+            <div class="stat-icon">📊</div>
         </div>
 
         <div class="detail-box completed">
@@ -46,7 +198,7 @@
                 <h4>Completed</h4>
                 <p>{{ completed }}</p>
             </div>
-            <span>✅</span>
+            <div class="stat-icon">✅</div>
         </div>
 
         <div class="detail-box pending">
@@ -54,7 +206,7 @@
                 <h4>Pending</h4>
                 <p>{{ pending }}</p>
             </div>
-            <span>⏳</span>
+            <div class="stat-icon">⏳</div>
         </div>
 
         <div class="detail-box progress">
@@ -62,98 +214,85 @@
                 <h4>In Progress</h4>
                 <p>{{ inprogress }}</p>
             </div>
-            <span>🚀</span>
+            <div class="stat-icon">🚀</div>
         </div>
-
     </div>
 
-
-    <!-- Quick Action -->
-  
-
-
-    <!-- Table -->
+    <!-- Recent Tasks Table -->
     <div class="recent">
-        <h3>Recent Tasks</h3>
-
-          <div class="quick-action">
-        <a href="{% url 'addtask' %}" class="btn-add">
-            + Add New Task
-        </a>
-    </div>
+        <div class="recent-header">
+            <h3 class="table-title">Recent Tasks</h3>
+            <a href="{% url 'addtask' %}" class="btn-add">＋ Add New Task</a>
+        </div>
 
         <table class="task-table">
             <thead>
                 <tr>
-                    <th>Task Title</th>
+                    <th>Title</th>
                     <th>Status</th>
                 </tr>
             </thead>
-
             <tbody>
                 {% for task in recent %}
                 <tr>
                     <td>{{ task.title }}</td>
-                    <td>
-                        <span class="status {{ task.status|lower }}">
-                            {{ task.status }}
-                        </span>
-                    </td>
+                    <td><span class="status {{ task.status|lower }}">{{ task.status }}</span></td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="2" class="empty">No tasks available</td>
+                    <td colspan="2">No tasks available</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-
     </div>
 
 </div>
 
-
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
+/* BAR CHART */
 const ctx = document.getElementById('taskChart');
-
 new Chart(ctx, {
     type: 'bar',
     data: {
         labels: ['Completed', 'Pending', 'In Progress', 'Total'],
         datasets: [{
+            label: 'Tasks Overview',
             data: [{{ completed }}, {{ pending }}, {{ inprogress }}, {{ total }}],
-            backgroundColor: [
-                '#10B981',
-                '#F59E0B',
-                '#3B82F6',
-                '#6366F1'
-            ],
-            borderRadius: 6
+            backgroundColor: ['#10B981','#F59E0B','#3B82F6','#6366F1'],
+            borderRadius: 6,
+            barThickness: 30
         }]
     },
     options: {
         responsive: true,
-        plugins:{legend:{display:false}}
+        maintainAspectRatio: false,
+        animation: { duration: 1200, easing: 'easeOutQuart' },
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
     }
 });
 
-
+/* DOUGHNUT CHART */
 const pieCtx = document.getElementById('taskPieChart');
-
 new Chart(pieCtx, {
     type: 'doughnut',
     data: {
-        labels: ['Completed','Pending','In Progress'],
+        labels: ['Completed', 'Pending', 'In Progress'],
         datasets: [{
             data: [{{ completed }}, {{ pending }}, {{ inprogress }}],
-            backgroundColor: ['#10B981','#F59E0B','#3B82F6']
+            backgroundColor: ['#10B981','#F59E0B','#3B82F6'],
+            borderWidth: 0
         }]
     },
     options: {
-        cutout:'70%',
-        plugins:{legend:{position:'bottom'}}
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '60%',
+        animation: { animateRotate: true, duration: 1400 },
+        plugins: { legend: { position: 'bottom' } }
     }
 });
 

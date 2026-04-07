@@ -5,8 +5,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Task_model
 
 
-
-
 def signup(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -32,7 +30,7 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
-            return redirect('dashboard')   # redirect to dashboard
+            return redirect('dashboard')
 
     return render(request, 'core/login.html')
 
@@ -42,10 +40,8 @@ def user_logout(request):
     return redirect('login')
 
 
-
 @login_required
 def dashboard(request):
-
     total = Task_model.objects.count()
     completed = Task_model.objects.filter(status="Completed").count()
     pending = Task_model.objects.filter(status="Pending").count()
@@ -67,16 +63,20 @@ def dashboard(request):
 @login_required
 def addtask(request):
     if request.method == "POST":
+        assigned_to = request.POST.get('assigned_to')
         title = request.POST.get('title')
         description = request.POST.get('description')
         priority = request.POST.get('priority')
         status = request.POST.get('status')
+        due_date = request.POST.get('due_date') or None
 
         Task_model.objects.create(
+            assigned_to=assigned_to,
             title=title,
             description=description,
             priority=priority,
             status=status,
+            due_date=due_date
         )
 
         return redirect('allTask')
@@ -102,12 +102,14 @@ def editTask(request, id):
     task_data = get_object_or_404(Task_model, id=id)
 
     if request.method == 'POST':
+        task_data.assigned_to = request.POST.get('assigned_to')
         task_data.title = request.POST.get('title')
         task_data.description = request.POST.get('description')
         task_data.priority = request.POST.get('priority')
         task_data.status = request.POST.get('status')
+        task_data.due_date = request.POST.get('due_date') or None
 
         task_data.save()
         return redirect('allTask')
- 
+
     return render(request, 'core/editTask.html', {'data': task_data})
