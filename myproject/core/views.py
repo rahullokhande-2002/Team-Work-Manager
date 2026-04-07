@@ -4,49 +4,60 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Task_model
 
-
+# ------------------- SIGNUP -------------------
 def signup(request):
+    error = None
     if request.method == "POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        password2 = request.POST.get('password2')
 
-        User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
-        )
-        return redirect('login')
+        if password != password2:
+            error = "Passwords do not match"
+        elif User.objects.filter(username=username).exists():
+            error = "Username already exists"
+        else:
+            User.objects.create_user(
+                username=username,
+                email=email,
+                password=password
+            )
+            return redirect('login')
 
-    return render(request, 'core/signup.html')
+    return render(request, 'core/signup.html', {'error': error})
 
 
+# ------------------- LOGIN -------------------
 def user_login(request):
+    error = None
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             login(request, user)
             return redirect('dashboard')
+        else:
+            error = "Invalid username or password"
 
-    return render(request, 'core/login.html')
+    return render(request, 'core/login.html', {'error': error})
 
 
+# ------------------- LOGOUT -------------------
 def user_logout(request):
     logout(request)
     return redirect('login')
 
 
+# ------------------- DASHBOARD -------------------
 @login_required
 def dashboard(request):
     total = Task_model.objects.count()
     completed = Task_model.objects.filter(status="Completed").count()
     pending = Task_model.objects.filter(status="Pending").count()
     inprogress = Task_model.objects.filter(status="In Progress").count()
-
     recent = Task_model.objects.all().order_by('-id')[:5]
 
     context = {
@@ -56,7 +67,6 @@ def dashboard(request):
         "inprogress": inprogress,
         "recent": recent
     }
-
     return render(request, "core/dashboard.html", context)
 
 

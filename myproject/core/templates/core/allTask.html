@@ -4,7 +4,7 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'core/allTask.css' %}">
 <style>
-/* Table Container */
+
 .table-container {
     max-width: 1200px;
     margin: 20px auto;
@@ -16,7 +16,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-/* Header */
+
 .table-header {
     display: flex;
     justify-content: space-between;
@@ -44,7 +44,7 @@
     transform: scale(1.05);
 }
 
-/* Table Styles */
+
 .task-table {
     width: 100%;
     border-collapse: collapse;
@@ -69,7 +69,7 @@
     transition: all 0.2s ease;
 }
 
-/* Status Labels */
+
 .status {
     padding: 4px 10px;
     border-radius: 6px;
@@ -82,7 +82,7 @@
 .status.completed { background: #10B981; }
 .status.in\ progress { background: #3B82F6; }
 
-/* Action Buttons */
+
 .action-btns a {
     margin-right: 6px;
     padding: 5px 12px;
@@ -112,7 +112,6 @@
     transform: scale(1.05);
 }
 
-/* Responsive */
 @media screen and (max-width: 768px) {
     .task-table th, .task-table td {
         padding: 10px;

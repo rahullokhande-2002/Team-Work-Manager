@@ -6,7 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-/* Container */
+
 .dashboard-container {
     padding: 20px;
     display: flex;
@@ -14,7 +14,7 @@
     gap: 20px;
 }
 
-/* Charts Row */
+
 .chart-row {
     display: flex;
     gap: 20px;
@@ -35,13 +35,13 @@
     font-size: 16px;
 }
 
-/* Make charts smaller and responsive */
+
 .chart-card canvas {
     width: 100% !important;
     height: 150px !important;
 }
 
-/* Stats Cards */
+
 .stats-details {
     display: flex;
     gap: 20px;
@@ -80,7 +80,6 @@
     font-size: 24px;
 }
 
-/* Quick Action Button */
 .btn-add {
     background-color: #4F46E5;
     color: #fff;
@@ -98,7 +97,7 @@
     transform: translateY(-2px);
 }
 
-/* Recent Tasks Table */
+
 .recent {
     margin-top: 20px;
 }
@@ -147,12 +146,12 @@
     background-color: #f3f4f6;
 }
 
-/* Status Colors */
+
 .status.completed { color: #10B981; font-weight: 600; }
 .status.pending { color: #F59E0B; font-weight: 600; }
 .status.in\ progress { color: #3B82F6; font-weight: 600; }
 
-/* Responsive Adjustments */
+
 @media screen and (max-width: 900px) {
     .chart-card {
         flex: 1 1 100%;
@@ -170,7 +169,7 @@
 {% block content %}
 <div class="dashboard-container">
 
-    <!-- Charts Row -->
+
     <div class="chart-row">
         <div class="chart-card">
             <h3>Task Analytics</h3>
@@ -183,7 +182,7 @@
         </div>
     </div>
 
-    <!-- Stats Cards -->
+   
     <div class="stats-details">
         <div class="detail-box total">
             <div>
@@ -218,7 +217,7 @@
         </div>
     </div>
 
-    <!-- Recent Tasks Table -->
+   
     <div class="recent">
         <div class="recent-header">
             <h3 class="table-title">Recent Tasks</h3>
@@ -252,7 +251,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-/* BAR CHART */
+
 const ctx = document.getElementById('taskChart');
 new Chart(ctx, {
     type: 'bar',
@@ -275,7 +274,7 @@ new Chart(ctx, {
     }
 });
 
-/* DOUGHNUT CHART */
+
 const pieCtx = document.getElementById('taskPieChart');
 new Chart(pieCtx, {
     type: 'doughnut',

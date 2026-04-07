@@ -4,7 +4,7 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'core/editTask.css' %}">
 <style>
-/* Container */
+
 .container {
     max-width: 600px;
     margin: 30px auto;
@@ -20,7 +20,7 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
-/* Form */
+
 form {
     display: flex;
     flex-direction: column;
@@ -47,13 +47,12 @@ input:focus, textarea:focus, select:focus {
     box-shadow: 0 0 5px rgba(99,102,241,0.3);
 }
 
-/* Textarea */
 textarea {
     resize: vertical;
     min-height: 80px;
 }
 
-/* Row for priority/status */
+
 .row {
     display: flex;
     gap: 15px;
@@ -66,7 +65,6 @@ textarea {
     flex-direction: column;
 }
 
-/* Buttons */
 .buttons {
     display: flex;
     justify-content: flex-end;
@@ -106,7 +104,6 @@ button.cancel:hover {
     transform: scale(1.05);
 }
 
-/* Responsive */
 @media screen and (max-width: 480px) {
     .row {
         flex-direction: column;
