@@ -109,5 +109,5 @@ def editTask(request, id):
 
         task_data.save()
         return redirect('allTask')
-
+ 
     return render(request, 'core/editTask.html', {'data': task_data})

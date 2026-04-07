@@ -10,67 +10,112 @@
 
 <div class="dashboard-container">
 
-    <!-- Chart -->
-    <div class="chart-card">
-        <h3>Task Analytics</h3>
-        <canvas id="taskChart"></canvas>
+    <!-- Top Section -->
+    <div class="top-grid">
+
+        <div class="chart-card">
+            <h3>Task Analytics</h3>
+            <div class="chart-wrapper">
+                <canvas id="taskChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>Task Distribution</h3>
+            <div class="chart-wrapper small">
+                <canvas id="taskPieChart"></canvas>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Stats Numbers -->
+
+    <!-- Stats -->
     <div class="stats-details">
 
-        <div class="detail-box">
-            <h4>Total Tasks</h4>
-            <p>{{ total }}</p>
+        <div class="detail-box total">
+            <div>
+                <h4>Total Tasks</h4>
+                <p>{{ total }}</p>
+            </div>
+            <span>📊</span>
         </div>
 
-        <div class="detail-box">
-            <h4>Completed</h4>
-            <p>{{ completed }}</p>
+        <div class="detail-box completed">
+            <div>
+                <h4>Completed</h4>
+                <p>{{ completed }}</p>
+            </div>
+            <span>✅</span>
         </div>
 
-        <div class="detail-box">
-            <h4>Pending</h4>
-            <p>{{ pending }}</p>
+        <div class="detail-box pending">
+            <div>
+                <h4>Pending</h4>
+                <p>{{ pending }}</p>
+            </div>
+            <span>⏳</span>
         </div>
 
-        <div class="detail-box">
-            <h4>In Progress</h4>
-            <p>{{ inprogress }}</p>
+        <div class="detail-box progress">
+            <div>
+                <h4>In Progress</h4>
+                <p>{{ inprogress }}</p>
+            </div>
+            <span>🚀</span>
         </div>
 
     </div>
+
 
     <!-- Quick Action -->
-    <div class="quick-action">
-        <a href="{% url 'addtask' %}" class="btn-add">
-            + Add Task
-        </a>
-    </div>
+  
 
-    <!-- Recent Tasks -->
+
+    <!-- Table -->
     <div class="recent">
         <h3>Recent Tasks</h3>
 
-        <table class="task-table">
-            <tr>
-                <th>Title</th>
-                <th>Status</th>
-            </tr>
+          <div class="quick-action">
+        <a href="{% url 'addtask' %}" class="btn-add">
+            + Add New Task
+        </a>
+    </div>
 
-            {% for task in recent %}
-            <tr>
-                <td>{{ task.title }}</td>
-                <td>{{ task.status }}</td>
-            </tr>
-            {% endfor %}
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>Task Title</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for task in recent %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>
+                        <span class="status {{ task.status|lower }}">
+                            {{ task.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" class="empty">No tasks available</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
+
     </div>
 
 </div>
 
 
 <script>
+document.addEventListener("DOMContentLoaded", function(){
+
 const ctx = document.getElementById('taskChart');
 
 new Chart(ctx, {
@@ -78,7 +123,6 @@ new Chart(ctx, {
     data: {
         labels: ['Completed', 'Pending', 'In Progress', 'Total'],
         datasets: [{
-            label: 'Tasks Overview',
             data: [{{ completed }}, {{ pending }}, {{ inprogress }}, {{ total }}],
             backgroundColor: [
                 '#10B981',
@@ -86,41 +130,33 @@ new Chart(ctx, {
                 '#3B82F6',
                 '#6366F1'
             ],
-            borderRadius: 8,
-            barThickness: 40
+            borderRadius: 6
         }]
     },
     options: {
         responsive: true,
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                backgroundColor: '#111827',
-                titleColor: '#fff',
-                bodyColor: '#fff',
-                padding: 10,
-                cornerRadius: 6
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    color: '#f1f5f9'
-                },
-                ticks: {
-                    stepSize: 1
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                }
-            }
-        }
+        plugins:{legend:{display:false}}
     }
+});
+
+
+const pieCtx = document.getElementById('taskPieChart');
+
+new Chart(pieCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Completed','Pending','In Progress'],
+        datasets: [{
+            data: [{{ completed }}, {{ pending }}, {{ inprogress }}],
+            backgroundColor: ['#10B981','#F59E0B','#3B82F6']
+        }]
+    },
+    options: {
+        cutout:'70%',
+        plugins:{legend:{position:'bottom'}}
+    }
+});
+
 });
 </script>
 

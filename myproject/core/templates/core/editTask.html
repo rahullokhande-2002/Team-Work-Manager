@@ -20,6 +20,11 @@
         <textarea name="description"
                   placeholder="What needs to be done?">{{ data.description }}</textarea>
 
+        <!-- ✅ ADD THIS -->
+        <label>Update Due Date</label>
+        <input type="date" name="due_date"
+               value="{{ data.due_date|date:'Y-m-d' }}">
+
         <div class="row">
             <div class="col">
                 <label>Update Priority</label>

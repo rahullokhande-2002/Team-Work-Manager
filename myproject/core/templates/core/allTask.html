@@ -24,6 +24,7 @@
             <th>Priority</th>
             <th>Status</th>
             <th>Action</th>
+            <th>Date</th>
         </tr>
 
         {% for x in data %}
@@ -32,6 +33,7 @@
             <td>{{ x.description }}</td>
             <td>{{ x.priority }}</td>
             <td>{{ x.status }}</td>
+            <td>{{ x.due_date }}</td>
 
             <td class="action-btns">
                 <a href="{% url 'edit' x.id %}" class="btn-edit">✏️ Edit</a>
