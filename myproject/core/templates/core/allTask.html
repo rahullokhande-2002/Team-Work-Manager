@@ -3,6 +3,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'core/allTask.css' %}">
+
 <style>
 
 .table-container {
@@ -15,7 +16,6 @@
     overflow-x: auto;
     transition: all 0.3s ease-in-out;
 }
-
 
 .table-header {
     display: flex;
@@ -44,7 +44,6 @@
     transform: scale(1.05);
 }
 
-
 .task-table {
     width: 100%;
     border-collapse: collapse;
@@ -69,23 +68,25 @@
     transition: all 0.2s ease;
 }
 
-
+/* ✅ STATUS BADGES */
 .status {
-    padding: 4px 10px;
-    border-radius: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
     font-weight: 500;
     color: #fff;
     display: inline-block;
+    font-size: 0.85rem;
 }
 
+/* Correct class names */
 .status.pending { background: #F59E0B; }
 .status.completed { background: #10B981; }
-.status.in\ progress { background: #3B82F6; }
+.status.in-progress { background: #3B82F6; }
 
-
+/* Action buttons */
 .action-btns a {
     margin-right: 6px;
-    padding: 5px 12px;
+    padding: 6px 12px;
     border-radius: 6px;
     text-decoration: none;
     font-weight: 500;
@@ -122,6 +123,7 @@
         font-size: 1.5rem;
     }
 }
+
 </style>
 {% endblock %}
 
@@ -154,17 +156,22 @@
                 <td>{{ x.title }}</td>
                 <td>{{ x.description }}</td>
                 <td>{{ x.priority }}</td>
+
                 <td>
+                    <!-- slugify makes: "In Progress" → "in-progress" -->
                     <span class="status {{ x.status|lower|slugify }}">
                         {{ x.status }}
                     </span>
                 </td>
+
                 <td>{{ x.due_date }}</td>
+
                 <td class="action-btns">
                     <a href="{% url 'edit' x.id %}" class="btn-edit">✏️ Edit</a>
                     <a href="{% url 'delete' x.id %}" class="btn-delete">🗑 Delete</a>
                 </td>
             </tr>
+
             {% empty %}
             <tr>
                 <td colspan="7" style="text-align:center; padding:15px; color:#999;">

@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Task_model
 
-# ------------------- SIGNUP -------------------
 def signup(request):
     error = None
     if request.method == "POST":
@@ -28,7 +27,7 @@ def signup(request):
     return render(request, 'core/signup.html', {'error': error})
 
 
-# ------------------- LOGIN -------------------
+
 def user_login(request):
     error = None
     if request.method == "POST":
@@ -45,13 +44,12 @@ def user_login(request):
     return render(request, 'core/login.html', {'error': error})
 
 
-# ------------------- LOGOUT -------------------
 def user_logout(request):
     logout(request)
     return redirect('login')
 
 
-# ------------------- DASHBOARD -------------------
+
 @login_required
 def dashboard(request):
     total = Task_model.objects.count()
