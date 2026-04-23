@@ -1,29 +1,131 @@
 {% extends "core/base.html" %}
-{% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'core/addtask.css' %}">
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f7fb;
+}
+
+.container {
+    max-width: 500px;
+    margin: 60px auto;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #444;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74,144,226,0.3);
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.col {
+    flex: 1;
+}
+
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.save {
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.save:hover {
+    background: #43a047;
+}
+
+.cancel {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.cancel:hover {
+    background: #c0392b;
+}
+
+@media (max-width: 600px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+</style>
 {% endblock %}
 
 {% block content %}
 <div class="container">
+    <h2>Add New Task</h2>
 
     <form method="POST">
         {% csrf_token %}
 
-        <!-- NAME FIELD -->
         <label>Assigned To *</label>
         <input type="text" name="assigned_to" placeholder="e.g. Rahul / Team Member" required>
 
-        <!-- TITLE -->
         <label>Title *</label>
         <input type="text" name="title" placeholder="e.g. Design homepage" required>
 
-        <!-- DESCRIPTION -->
         <label>Description</label>
         <textarea name="description" placeholder="What needs to be done?"></textarea>
 
-        <!-- DUE DATE -->
         <label>Due Date</label>
         <input type="date" name="due_date">
 
@@ -51,7 +153,6 @@
             <button type="submit" class="save">Save Task</button>
             <button type="button" class="cancel" onclick="window.history.back()">Cancel</button>
         </div>
-
     </form>
 </div>
 {% endblock %}

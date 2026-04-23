@@ -2,21 +2,30 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+# =========================
 # SECURITY
+# =========================
+
 SECRET_KEY = os.environ.get(
-    'SECRET_KEY',
-    'django-insecure-5wodg#3p=u%nuoc@cvrcw=(2^-tjd6cuss*+fyumk_sug3^moq'
+    "SECRET_KEY",
+    "django-insecure-change-this-in-production"
 )
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS",
+    "127.0.0.1,localhost"
+).split(",")
 
 
+# =========================
 # APPLICATIONS
+# =========================
+
 INSTALLED_APPS = [
     'core',
     'django.contrib.admin',
@@ -28,10 +37,13 @@ INSTALLED_APPS = [
 ]
 
 
+# =========================
 # MIDDLEWARE
+# =========================
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -44,11 +56,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'myproject.urls'
 
 
+# =========================
 # TEMPLATES
+# =========================
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],   # FIXED
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,21 +79,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
 
+# =========================
 # DATABASE
-if os.environ.get('DATABASE_URL'):
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+# =========================
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+    )
+}
 
 
+# =========================
 # PASSWORD VALIDATION
+# =========================
+
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -87,25 +102,32 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# STATIC FILES
-STATIC_URL = '/static/'
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'core/static',   # only if exists
-]
-
-# WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
+# =========================
 # INTERNATIONALIZATION
+# =========================
+
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
 
+# =========================
+# STATIC FILES
+# =========================
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+# =========================
 # DEFAULT PRIMARY KEY
+# =========================
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

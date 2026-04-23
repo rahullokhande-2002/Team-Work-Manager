@@ -1,105 +1,128 @@
-.table-container{
-    padding:20px;
+/* Table Container */
+.table-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    overflow-x: auto;
+    transition: all 0.3s ease-in-out;
 }
 
 /* Header */
-.table-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-    padding:10px 0;
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-.table-header h2{
-    margin:0;
-    font-size:20px;
-    font-weight:600;
-    color:#111827;
+.table-header h2 {
+    color: #333;
+    font-size: 1.8rem;
+    margin: 0;
 }
 
 /* Add Button */
-.btn-add{
-    background:linear-gradient(135deg,#22c55e,#16a34a);
-    color:white;
-    padding:8px 16px;
-    text-decoration:none;
-    border-radius:6px;
-    font-size:14px;
-    font-weight:500;
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-    transition:0.2s ease;
+.btn-add {
+    background: #6366F1;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.btn-add:hover{
-    transform:translateY(-1px);
-    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+.btn-add:hover {
+    background: #4F46E5;
+    transform: scale(1.05);
 }
 
 /* Table */
-.task-table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
-    border-radius:8px;
-    overflow:hidden;
+.task-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
 }
 
-.task-table th{
-    background:#4F46E5;
-    color:white;
-    text-align:left;
-    padding:12px;
+.task-table th, .task-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.task-table td{
-    padding:12px;
-    border-bottom:1px solid #f1f5f9;
+.task-table th {
+    background: #f5f5f5;
+    color: #333;
+    font-weight: 600;
 }
 
-.task-table tr:hover{
-    background:#f9fafb;
+.task-table tr:hover {
+    background: #f9f9ff;
+    transform: scale(1.01);
+    transition: all 0.2s ease;
 }
+
+/* Status Badges */
+.status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.85rem;
+}
+
+.status.pending { background: #F59E0B; }
+.status.completed { background: #10B981; }
+.status.in-progress { background: #3B82F6; }
 
 /* Action buttons */
-.action-btns{
-    display:flex;
-    gap:10px;
+.action-btns {
+    display: flex;
+    gap: 10px;
 }
 
-/* Edit button */
-.btn-edit{
-    background:linear-gradient(135deg,#3b82f6,#2563eb);
-    color:white;
-    padding:6px 14px;
-    text-decoration:none;
-    border-radius:6px;
-    font-size:13px;
-    font-weight:500;
-    box-shadow:0 2px 4px rgba(0,0,0,0.1);
-    transition:0.2s;
+.btn-edit {
+    background: #3B82F6;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.btn-edit:hover{
-    transform:translateY(-1px);
-    box-shadow:0 4px 8px rgba(0,0,0,0.15);
+.btn-edit:hover {
+    background: #2563EB;
+    transform: scale(1.05);
 }
 
-/* Delete button */
-.btn-delete{
-    background:linear-gradient(135deg,#ef4444,#dc2626);
-    color:white;
-    padding:6px 14px;
-    text-decoration:none;
-    border-radius:6px;
-    font-size:13px;
-    font-weight:500;
-    box-shadow:0 2px 4px rgba(0,0,0,0.1);
-    transition:0.2s;
+.btn-delete {
+    background: #EF4444;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.btn-delete:hover{
-    transform:translateY(-1px);
-    box-shadow:0 4px 8px rgba(0,0,0,0.15);
+.btn-delete:hover {
+    background: #DC2626;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .task-table th, .task-table td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .table-header h2 {
+        font-size: 1.5rem;
+    }
 }
